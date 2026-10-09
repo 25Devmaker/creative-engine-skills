@@ -1,0 +1,6 @@
+interface:
+  display_name: "New Creatives"
+  short_description: "Help with New Creatives tasks"
+  default_prompt: "Use $new-creatives to turn my brief into a branded Newton School image."
+policy:
+  allow_implicit_invocation: true

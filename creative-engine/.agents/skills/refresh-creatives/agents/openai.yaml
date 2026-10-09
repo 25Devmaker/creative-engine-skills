@@ -1,0 +1,6 @@
+interface:
+  display_name: "Refresh Creatives"
+  short_description: "Help with Refresh Creatives tasks"
+  default_prompt: "Use $refresh-creatives to update this existing Newton School creative."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Newton Creative Engine"
+  short_description: "Build Creative Engine work safely"
+  default_prompt: "Use $newton-creative-engine to work on the canonical Creative Engine app."
+policy:
+  allow_implicit_invocation: true

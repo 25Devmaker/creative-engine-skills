@@ -1,0 +1,6 @@
+interface:
+  display_name: "Reframe and Resize"
+  short_description: "Help with Reframe and Resize tasks"
+  default_prompt: "Use $reframe-and-resize to create a safe ratio variant of this creative."
+policy:
+  allow_implicit_invocation: true

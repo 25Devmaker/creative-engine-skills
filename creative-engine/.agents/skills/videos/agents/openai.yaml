@@ -1,0 +1,6 @@
+interface:
+  display_name: "Videos"
+  short_description: "Storyboard first, then create a branded video"
+  default_prompt: "Use $videos to storyboard my Newton School video before generating it."
+policy:
+  allow_implicit_invocation: true
