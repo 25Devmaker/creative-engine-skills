@@ -8,3 +8,5 @@ dist/
 *.pem
 *.key
 creative-engine/deliverables/generated/
+/approved-images/*
+!/approved-images/.gitkeep

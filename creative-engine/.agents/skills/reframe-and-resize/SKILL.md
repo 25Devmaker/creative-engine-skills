@@ -20,3 +20,5 @@ Write a precise reframe prompt with the input ratio, target ratio, anchored elem
 ## Generate and return
 
 After authorization, use the connected Higgsfield tool with the supplied image and refined reframe brief; never use a direct Higgsfield API. Inspect the delivered dimensions and final composition. Return the output inline. If exact text/logo integrity needs deterministic source-layer compositing that is unavailable, label the result **draft** rather than calling it compliant.
+
+After the user explicitly rates a delivered size variant **Good**, use the [shared approved-image save procedure](../newton-creative-engine/references/creative-output-standards.md#save-images-after-a-good-rating). Save that approved variant directly in the single `approved-images/` folder. Treat each separately approved ratio as one file in the same folder, never a ratio-specific subfolder.

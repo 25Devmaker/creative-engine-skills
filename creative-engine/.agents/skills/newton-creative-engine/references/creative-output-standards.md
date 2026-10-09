@@ -39,3 +39,15 @@ Use hook, subhook, persona, and RTBs as brief inputs. Do not rely on an image/vi
 ## Review before delivery
 
 Inspect every final image and every distinct video layout against the source creative, requested change, brand guide, ratio, safe areas, and approved claims. Report a failed gate plainly and return a draft rather than describing it as fully compliant.
+
+## Save images after a Good rating
+
+For New, Refresh, and Reframe images, wait until the user explicitly rates a specific delivered image **Good** or approves it. Do not archive merely generated, draft, rejected, or self-assessed outputs. For each approved image, obtain its local final image file and run this command from the skills repository root:
+
+```bash
+node creative-engine/.agents/skills/newton-creative-engine/scripts/save-approved-image.mjs --approved-by-user "/absolute/path/to/final-image.png"
+```
+
+The command creates the single repository-root `approved-images/` folder if needed and prints the saved path. All approved images go directly into that same folder with unique filenames—never a subfolder per image. Confirm that the printed file exists before telling the user it was saved. If the connected tool supplies only a remote result and no usable local file, report that the image was **not** archived and request the local output; do not invent a path. A Good rating is a user decision, not proof of strict brand compliance.
+
+The folder is local to this skills checkout and image files are Git-ignored. It does not automatically sync to GitHub, the runnable website's Supabase `final` bucket, or its RAG index. Video outputs are outside this image-folder rule.

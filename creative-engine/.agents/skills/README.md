@@ -23,6 +23,7 @@ cd creative-engine-skills/creative-engine
 2. Check that the project skills in `creative-engine/.agents/skills/` appear in Codex's skill list. If your Codex setup does not discover nested project skills, point it to this folder or install the desired folder using your Codex skill installer; retain the entire repository so linked references resolve.
 3. Invoke one workflow at a time: `$new-creatives`, `$refresh-creatives`, `$reframe-and-resize`, or `$videos`. Add your brief, exact course, approved hook/subhook/RTBs, source media when needed, and target ratio.
 4. For video, review and approve the storyboard before requesting production. Give explicit permission before any connected generation tool spends credits.
+5. For an image you rate **Good**, the New, Refresh, or Reframe skill saves the local final file to the single repository-root `approved-images/` folder using the [approved-image save procedure](newton-creative-engine/references/creative-output-standards.md#save-images-after-a-good-rating). If the generated result is not available as a local file, ask for that file; an inline preview alone is not proof it was saved. This local folder is Git-ignored and does not sync to the website's Supabase library.
 
 Example: `Use $new-creatives for a 9:16 Data Science & AI ad. Hook: [approved hook]. Subhook: [approved subhook]. RTBs: [exact approved wording]. Audience: [persona].`
 

@@ -10,6 +10,7 @@ For installation and usage steps, start with the [skills README](.agents/skills/
 - `skills/newton-school-brand/` and `skills/prompt-enhancer/`: shared brand and prompt guidance.
 - `skills/brand/` and `creative-engine/memory/brand/assets/`: the authoritative 2026 guide, approved Newton School logo variants, and Mona Sans fonts.
 - `creative-engine/memory/skills/`: prompt, aspect-ratio, and scene-planning references used by the workflows. Some of these source files are still marked `FILL`; treat them as unfinished guidance rather than tested provider recipes.
+- `approved-images/`: one flat local folder for image outputs the user explicitly rates Good. The folder is included, but its generated contents are Git-ignored and are not synced to the application or other clones.
 
 ## Reuse
 
