@@ -1,0 +1,117 @@
+diff --git a/creative-engine/.agents/skills/new-creatives/SKILL.md b/creative-engine/.agents/skills/new-creatives/SKILL.md
+index 0ab7a8d..2e72796 100644
+--- a/creative-engine/.agents/skills/new-creatives/SKILL.md
++++ b/creative-engine/.agents/skills/new-creatives/SKILL.md
+@@ -23,6 +23,6 @@ Show the refined prompt and the structured brief when review is useful. Do not s
+ 
+ After the user has authorized generation, use the connected Higgsfield tool, never a direct Higgsfield API. Generate at the requested ratio, then inspect the result under the shared review gate. Return the resulting image inline with its refined prompt and a short compliance status.
+ 
+-For a final branded export, use the retained assets in `../../../memory/brand/assets/`. Place `newton-school-dark-logo.png` intact on white/light backgrounds and `newton-school-white-logo.png` intact on blue/dark backgrounds. Use the supplied Mona Sans variable fonts for deterministic text overlays. If a required logo is missing from the generated result, add the matching approved lockup; do not replace it with AI-drawn logo pixels. If exact logo, copy, or font compositing cannot be verified, return it only as a **draft** and identify the missing asset.
++For a final branded export, use the retained assets in `../../../memory/brand/assets/`. Place `newton-school-dark-logo.png` intact on white/light backgrounds and `newton-school-white-logo.png` intact on blue/dark backgrounds. Use the supplied Mona Sans variable fonts for deterministic text overlays. If a required logo is missing from the generated result, add the matching approved lockup; do not replace it with AI-drawn logo pixels. A 9:16 image does not require a logo: leave it out unless the prompt explicitly asks for one (see the 9:16 logo rule in the shared standards). If exact logo, copy, or font compositing cannot be verified, return it only as a **draft** and identify the missing asset.
+ 
+ After the user explicitly rates this delivered image **Good**, use the [shared approved-image save procedure](../newton-creative-engine/references/creative-output-standards.md#save-images-after-a-good-rating). Confirm the returned path inside the single `approved-images/` folder. Do not save it before that rating or claim it was archived when no local file is available.
+diff --git a/creative-engine/.agents/skills/newton-creative-engine/SKILL.md b/creative-engine/.agents/skills/newton-creative-engine/SKILL.md
+index f130cb4..4c23707 100644
+--- a/creative-engine/.agents/skills/newton-creative-engine/SKILL.md
++++ b/creative-engine/.agents/skills/newton-creative-engine/SKILL.md
+@@ -47,6 +47,8 @@ Do not load a specialized workflow merely because an ordinary task happens to me
+ 
+ The supplied 2026 reference image overrides transcribed text. Use the approved full logo lockup only; do not redraw it. White is preferred, Brand Blue is `#0673F9`, and use at most one approved secondary accent. Mona Sans is required for final branded text. If approved logo assets or the font are unavailable, label the output a draft and reserve clear space for deterministic compositing. Review the final image or every distinct video layout before calling it compliant.
+ 
++**9:16 logo rule:** do not place the Newton School logo on any 9:16 (1080×1920, Stories/Reels) image — not in the top-left corner or anywhere else — unless the user's prompt explicitly asks for the logo on the 9:16 version. When it is asked for, use the approved lockup per the brand rules and keep it inside the safe zone (clear of the top 250 px of platform UI).
++
+ ## Generation tool boundary
+ 
+ Use the connected Higgsfield tool for image and video generation; do not create or call a direct Higgsfield API integration for these workflows. The connected tool runs in the agent environment, not in the browser, so do not claim that a React button can invoke it automatically. If the requested work is a website integration rather than an agent-run generation, stop and ask Hari for an explicit server-side/provider-integration scope.
+diff --git a/creative-engine/.agents/skills/newton-creative-engine/references/creative-output-standards.md b/creative-engine/.agents/skills/newton-creative-engine/references/creative-output-standards.md
+index 942ae2d..2a62da5 100644
+--- a/creative-engine/.agents/skills/newton-creative-engine/references/creative-output-standards.md
++++ b/creative-engine/.agents/skills/newton-creative-engine/references/creative-output-standards.md
+@@ -30,9 +30,11 @@ Use hook, subhook, persona, and RTBs as brief inputs. Do not rely on an image/vi
+ ## Non-negotiable brand and composition rules
+ 
+ - Use the approved full logo lockup only; do not redraw, distort, recolour, or add a shadow to it.
++- **9:16 logo rule:** do not place the Newton School logo on any 9:16 (1080×1920, Stories/Reels) image — not in the top-left corner or anywhere else — unless the user's prompt explicitly asks for the logo on the 9:16 version. When it is asked for, use the approved lockup per the brand rules and keep it inside the safe zone (clear of the top 250 px of platform UI).
+ - Preserve required clear space and minimum size. Use the approved foreground/background signature with adequate contrast.
+ - Use Mona Sans for final branded text. Do not claim exact palette values that are not printed in the source guide.
+ - Apply the relevant design-skill rules for the requested format. Reframe through deliberate responsive reflow, not a destructive crop or a redesign.
++- **F-pattern reading order:** an average viewer scans a creative in an F shape — first across the top, then a shorter second line, then down the left edge. Put the hook top-left, directly under the logo, with no empty band between them; make the subhook the second, shorter line beneath it; align the supporting proof (RTBs, CTA, program pill) down the left edge or starting from the left. Place the key visual on the right so it fills the top-right instead of leaving white space. Never leave the top third empty or let a hero visual push the hook down the frame. For 16:9, the copy column sits on the left with the same order; for 9:16, the same order applies below the top safe zone.
+ - Keep people, logo, copy, icons, and CTAs out of each other's safe zones. Make hierarchy readable at the final delivery size.
+ - Do not invent people, learner testimonials, consent, statistics, salaries, outcomes, or claims.
+ 
+diff --git a/creative-engine/.agents/skills/reframe-and-resize/SKILL.md b/creative-engine/.agents/skills/reframe-and-resize/SKILL.md
+index be9664c..0fcbf56 100644
+--- a/creative-engine/.agents/skills/reframe-and-resize/SKILL.md
++++ b/creative-engine/.agents/skills/reframe-and-resize/SKILL.md
+@@ -13,6 +13,8 @@ Before generating, read the [shared creative-output standards](../newton-creativ
+ 
+ Inspect the source image and identify every element that must survive: approved copy, RTBs, CTA, logo, faces, key objects, hierarchy, and brand safe areas. Determine how those elements will reflow into the target frame. Reframing means deliberate responsive reflow; it must not be a crop that cuts text, the logo, or the focal subject.
+ 
++When the target ratio is 9:16, remove the Newton School logo from the reframed layout unless the user's prompt explicitly asks to keep it, per the 9:16 logo rule in the shared standards. This is the only element a 9:16 reframe drops by default; every other locked element still survives.
++
+ ## Refine the reframe prompt
+ 
+ Write a precise reframe prompt with the input ratio, target ratio, anchored elements, protected safe areas, preserved textual/factual content, and only the permitted background expansion or layout adjustments. Make it explicit that no claim, wording, logo treatment, or focal subject may be changed.
+diff --git a/creative-engine/.agents/skills/refresh-creatives/SKILL.md b/creative-engine/.agents/skills/refresh-creatives/SKILL.md
+index aab5343..9efc1cc 100644
+--- a/creative-engine/.agents/skills/refresh-creatives/SKILL.md
++++ b/creative-engine/.agents/skills/refresh-creatives/SKILL.md
+@@ -23,6 +23,6 @@ Create a source-preserving edit prompt from the uploaded creative and the user's
+ 
+ After authorization, submit the source image and refined edit prompt to the connected Higgsfield tool—never a direct API. Inspect the output side by side against the locked content and the approved visual-change list. Return the result inline with a concise list of what changed and what remained locked.
+ 
+-If the source logo is absent, add the matching approved lockup from `../../../memory/brand/assets/`: use `newton-school-dark-logo.png` on a white/light background or `newton-school-white-logo.png` on a blue/dark background. Keep an existing approved logo unchanged. Use the retained Mona Sans variable fonts only for deterministic overlays; never rely on a generated approximation. Label the result **draft** if exact branded text/logo preservation or compositing cannot be verified.
++If the output is 9:16, follow the 9:16 logo rule in the shared standards: no logo unless the prompt explicitly asks for one. Otherwise, if the source logo is absent, add the matching approved lockup from `../../../memory/brand/assets/`: use `newton-school-dark-logo.png` on a white/light background or `newton-school-white-logo.png` on a blue/dark background. Keep an existing approved logo unchanged. Use the retained Mona Sans variable fonts only for deterministic overlays; never rely on a generated approximation. Label the result **draft** if exact branded text/logo preservation or compositing cannot be verified.
+ 
+ After the user explicitly rates the refreshed result **Good**, use the [shared approved-image save procedure](../newton-creative-engine/references/creative-output-standards.md#save-images-after-a-good-rating). Save the refreshed output—not its source—directly in the single `approved-images/` folder, and report the confirmed path. Do not archive a rejected result.
+diff --git a/creative-engine/memory/skills/design/16x9.md b/creative-engine/memory/skills/design/16x9.md
+index d198273..03c09b3 100644
+--- a/creative-engine/memory/skills/design/16x9.md
++++ b/creative-engine/memory/skills/design/16x9.md
+@@ -3,3 +3,4 @@
+ - Headline max length (characters) that still renders cleanly in this ratio.
+ - Safe zones (keep text out of platform UI areas on Facebook/Instagram).
+ - Logo position and variant.
++- Reading order: follow the F-pattern rule in the shared creative-output standards — hook top-left under the logo (below the top safe zone on 9:16), subhook as the shorter second line, proof down the left edge, key visual on the right.
+diff --git a/creative-engine/memory/skills/design/1x1.md b/creative-engine/memory/skills/design/1x1.md
+index 7a7b71c..9c85ffd 100644
+--- a/creative-engine/memory/skills/design/1x1.md
++++ b/creative-engine/memory/skills/design/1x1.md
+@@ -3,3 +3,4 @@
+ - Headline max length (characters) that still renders cleanly in this ratio.
+ - Safe zones (keep text out of platform UI areas on Facebook/Instagram).
+ - Logo position and variant.
++- Reading order: follow the F-pattern rule in the shared creative-output standards — hook top-left under the logo (below the top safe zone on 9:16), subhook as the shorter second line, proof down the left edge, key visual on the right.
+diff --git a/creative-engine/memory/skills/design/9x16.md b/creative-engine/memory/skills/design/9x16.md
+index 6e49a35..2dc2edb 100644
+--- a/creative-engine/memory/skills/design/9x16.md
++++ b/creative-engine/memory/skills/design/9x16.md
+@@ -2,4 +2,5 @@
+ - Layout: where the headline, sub-hook, RTB stats, CTA and logo sit.
+ - Headline max length (characters) that still renders cleanly in this ratio.
+ - Safe zones (keep text out of platform UI areas on Facebook/Instagram).
+-- Logo position and variant.
++- Logo position and variant: **no logo by default.** Do not place the Newton School logo in the top-left corner or anywhere else on a 9:16 image unless the user's prompt explicitly asks for it. If asked, use the approved lockup (dark on light, white on blue/dark), untouched, inside the safe zone below the top 250 px.
++- Reading order: follow the F-pattern rule in the shared creative-output standards — hook top-left under the logo (below the top safe zone on 9:16), subhook as the shorter second line, proof down the left edge, key visual on the right.
+diff --git a/decisions.md b/decisions.md
+index 055112d..a10acc0 100644
+--- a/decisions.md
++++ b/decisions.md
+@@ -1,5 +1,17 @@
+ # Creative Engine skills decision log
+ 
++## 2026-10-11 — Lay out creatives for F-pattern reading
++
++- **What changed:** Added an F-pattern composition rule to the shared creative-output standards, the suite router, and the 9x16, 1x1 and 16x9 design skills: hook top-left directly under the logo, subhook as the shorter second line, RTBs/CTA aligned down the left edge, key visual on the right, and no empty top third.
++- **Why:** Review of a 4:5 creative showed the eye landing on empty top space while the hook sat mid-frame on the right. An average viewer scans in an F shape (top line, shorter second line, then down the left), so the most important copy must sit where that scan starts.
++- **Why this method:** Every image workflow already reads the shared standards before composing, and each ratio's design skill points back to the same rule, so new, refreshed and reframed outputs share one reading order.
++
++## 2026-10-11 — No logo on 9:16 images unless the prompt asks for it
++
++- **What changed:** Added a 9:16 logo rule to the shared creative-output standards, the core brand gate, the 9x16 design skill, and the new-creatives, refresh-creatives and reframe-and-resize workflows. A 9:16 (1080×1920) image gets no Newton School logo — not top-left or anywhere — unless the user's prompt explicitly requests it; if requested, the approved lockup goes inside the safe zone below the top 250 px.
++- **Why:** The Growth team does not want the logo on Stories/Reels creatives by default.
++- **Why this method:** The rule sits in the shared standards that every image workflow reads first, and each workflow that could add or keep a logo points back to it, so new, refreshed and reframed 9:16 outputs all behave the same way.
++
+ ## 2026-10-09 — Save Good-rated images in one shared local folder
+ 
+ - **What changed:** Added a tested, dependency-free save command for the image skills. It accepts a local PNG, JPEG, WebP, GIF, or AVIF only after an explicit Good-rating marker, validates the file header, and copies exact bytes into one flat `approved-images/` folder with a unique filename. The folder is retained in the package but generated images are Git-ignored.
